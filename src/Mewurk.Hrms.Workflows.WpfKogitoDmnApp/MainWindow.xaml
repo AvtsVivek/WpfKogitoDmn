@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WiredBrainCoffee.CustomersApp"
-        xmlns:controls="clr-namespace:WiredBrainCoffee.CustomersApp.Controls" xmlns:view="clr-namespace:WiredBrainCoffee.CustomersApp.View"
+        xmlns:controls="clr-namespace:WiredBrainCoffee.CustomersApp.Controls"
+        xmlns:view="clr-namespace:WiredBrainCoffee.CustomersApp.View"
         mc:Ignorable="d"
         Title="Dmn Kogito" 
         d:DesignWidth="700" d:DesignHeight="600"  Height="500" Width="800" FontSize="20">

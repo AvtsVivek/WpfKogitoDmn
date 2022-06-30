@@ -11,6 +11,8 @@
     <None Remove="Images\add.png" />
     <None Remove="Images\kogito_icon.png" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\MewurkFull.png" />
+    <None Remove="Images\MewurkICon.png" />
     <None Remove="Images\move.png" />
   </ItemGroup>
 
@@ -18,7 +20,14 @@
     <Resource Include="Images\add.png" />
     <Resource Include="Images\kogito_icon.png" />
     <Resource Include="Images\logo.png" />
+    <Resource Include="Images\MewurkFull.png" />
+    <Resource Include="Images\MewurkICon.png" />
     <Resource Include="Images\move.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
   </ItemGroup>
 
 </Project>
