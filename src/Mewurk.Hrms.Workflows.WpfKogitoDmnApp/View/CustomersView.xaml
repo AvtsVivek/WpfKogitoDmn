@@ -43,7 +43,7 @@
             <StackPanel Grid.Column="1" Margin="10" Width="Auto">
                 <Label>Path to xml:</Label>
                 <DockPanel LastChildFill="True">
-                    <Button Margin="2">Select</Button>
+                    <Button Margin="2" Name="btnOpenFile" Click="btnOpenFile_Click"  >Select</Button>
                     <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
                         controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True" />
                 </DockPanel >

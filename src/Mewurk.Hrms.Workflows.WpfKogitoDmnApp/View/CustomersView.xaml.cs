@@ -37,5 +37,26 @@ namespace WiredBrainCoffee.CustomersApp.View
             var newColumn = column == 0 ? 2 : 0;
             Grid.SetColumn(customerListGrid, newColumn);
         }
+
+        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.InitialDirectory = @"c:\temp\";
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".dmn"; // Default file extension
+            dialog.Filter = "Dmn files (*.dmn)|*.dmn|Xml files (*.dml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            //"Text documents (.txt)|*.txt"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dialog.FileName;
+            }
+        }
     }
 }
