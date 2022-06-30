@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfKogitoDmn.App
+namespace WiredBrainCoffee.CustomersApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,5 +24,7 @@ namespace WpfKogitoDmn.App
         {
             InitializeComponent();
         }
+
+
     }
 }
