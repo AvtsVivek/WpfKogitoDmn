@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
 
 namespace WiredBrainCoffee.CustomersApp.View
 {
@@ -48,14 +50,19 @@ namespace WiredBrainCoffee.CustomersApp.View
             dialog.Filter = "Dmn files (*.dmn)|*.dmn|Xml files (*.dml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
             //"Text documents (.txt)|*.txt"; // Filter files by extension
 
+            if (File.Exists(Settings.Default.DmnFilePath))
+                dialog.InitialDirectory = System.IO.Path.GetDirectoryName(Settings.Default.DmnFilePath);
+            else
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
 
             // Process open file dialog box results
             if (result == true)
             {
-                // Open document
-                string filename = dialog.FileName;
+                Settings.Default.DmnFilePath = dialog.FileName;
+                Settings.Default.Save();
             }
         }
     }
