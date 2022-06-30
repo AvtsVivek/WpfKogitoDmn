@@ -64,7 +64,7 @@
             </Menu>
 
             <controls:HeaderControl Grid.Row="1" />
-            <view:CustomersView Grid.Row="2" />
+            <view:DmnFileView Grid.Row="2" />
             <StatusBar Grid.Row="3">
                 <StatusBarItem FontSize="20" Content=" (c) Mewurk "/>
             </StatusBar>

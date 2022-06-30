@@ -14,17 +14,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
 
 namespace WiredBrainCoffee.CustomersApp.View
 {
     /// <summary>
     /// Interaction logic for CustomersView.xaml
     /// </summary>
-    public partial class CustomersView : UserControl
+    public partial class DmnFileView : UserControl
     {
-        public CustomersView()
+        private readonly DmnFileViewModel _viewModel;
+        public DmnFileView()
         {
             InitializeComponent();
+            _viewModel = new DmnFileViewModel();
+            DataContext = _viewModel;
+            Loaded += DmnFileView_Loaded;
+        }
+
+        private void DmnFileView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(Settings.Default.DmnFilePath))
+            {
+                _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
+                _viewModel.SelectedDmnFileName = System.IO.Path.GetFileName(_viewModel.SelectedDmnFilePath);
+            }
         }
 
         private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
@@ -48,21 +62,19 @@ namespace WiredBrainCoffee.CustomersApp.View
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".dmn"; // Default file extension
             dialog.Filter = "Dmn files (*.dmn)|*.dmn|Xml files (*.dml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            //"Text documents (.txt)|*.txt"; // Filter files by extension
 
             if (File.Exists(Settings.Default.DmnFilePath))
                 dialog.InitialDirectory = System.IO.Path.GetDirectoryName(Settings.Default.DmnFilePath);
             else
                 dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            // Show open file dialog box
-            bool? result = dialog.ShowDialog();
+            var result = dialog.ShowDialog();
 
-            // Process open file dialog box results
             if (result == true)
             {
                 Settings.Default.DmnFilePath = dialog.FileName;
                 Settings.Default.Save();
+                _viewModel.SelectedDmnFilePath = dialog.FileName;
             }
         }
     }
