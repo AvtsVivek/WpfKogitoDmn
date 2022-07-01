@@ -33,21 +33,18 @@
                         <Image Source="/Images/move.png" Height="18"/>
                     </Button>
                 </StackPanel>
-                <ListView Grid.Row="1" Margin="10 0 10 10">
-                    <ListViewItem>Julia</ListViewItem>
-                    <ListViewItem>Alex</ListViewItem>
-                    <ListViewItem>Thomas</ListViewItem>
+                <ListView Grid.Row="1" Margin="10 0 10 10" 
+                          ItemsSource="{Binding Path=Rules}" DisplayMemberPath="InputEntryName" >
                 </ListView>
             </Grid>
             <!-- Customer detail -->
             <StackPanel Grid.Column="1" Margin="10" Width="Auto">
-                <Label>Path to xml:</Label>
+                <Label>Path to Dmn file:</Label>
                 <DockPanel LastChildFill="True">
                     <Button Margin="2" Name="btnOpenFile" Click="btnOpenFile_Click"  >Select</Button>
                     <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
                         controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
-                        Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}"
-                             />
+                        Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}" />
                 </DockPanel >
                 <CheckBox Margin="0 10 0 0">
                     Is developer

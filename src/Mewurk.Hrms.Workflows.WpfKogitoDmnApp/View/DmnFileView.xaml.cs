@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
 
 namespace WiredBrainCoffee.CustomersApp.View
@@ -13,11 +14,14 @@ namespace WiredBrainCoffee.CustomersApp.View
     public partial class DmnFileView : UserControl
     {
         private readonly DmnFileViewModel _viewModel;
+        private readonly IDmnService _dmnService;
+
         public DmnFileView()
         {
             InitializeComponent();
             _viewModel = new DmnFileViewModel();
             DataContext = _viewModel;
+            _dmnService = new DmnService();
             Loaded += DmnFileView_Loaded;
         }
 
@@ -26,7 +30,10 @@ namespace WiredBrainCoffee.CustomersApp.View
             if (File.Exists(Settings.Default.DmnFilePath))
             {
                 _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
-                _viewModel.SelectedDmnFileName = System.IO.Path.GetFileName(_viewModel.SelectedDmnFilePath);
+                _viewModel.SelectedDmnFileName = Path.GetFileName(_viewModel.SelectedDmnFilePath);
+                var ruleNodes = _dmnService.GetRules(_viewModel.SelectedDmnFilePath);
+                foreach (var ruleNode in ruleNodes)
+                    _viewModel.Rules.Add(ruleNode);
             }
         }
 

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 
 namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 {
@@ -10,6 +13,14 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
     {
         private string _selectedDmnFileName = string.Empty;
         private string _selectedDmnFilePath = string.Empty;
+        public ObservableCollection<DmnRule> Rules { get; } = new();
+
+
+
+        public DmnFileViewModel()
+        {
+
+        }
 
         public string SelectedDmnFileName {
             get => _selectedDmnFileName;
