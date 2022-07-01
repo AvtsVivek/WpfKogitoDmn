@@ -9,14 +9,26 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition  />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
+            <StackPanel Grid.Row="0" Margin="10" Width="Auto" Grid.ColumnSpan="3">
+                <Label>Path to Dmn file:</Label>
+                <DockPanel LastChildFill="True">
+                    <Button Margin="2" Name="btnOpenOneFile" Click="btnOpenFile_Click">Select</Button>
+                    <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
+                             controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
+                             Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}" />
+                </DockPanel >
+            </StackPanel>
             <!-- Customer list -->
-            <Grid x:Name="customerListGrid" Background="#777">
+            <Grid x:Name="customerListGrid" Background="#777" Grid.Row="1" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
@@ -38,7 +50,7 @@
                 </ListView>
             </Grid>
             <!-- Customer detail -->
-            <StackPanel Grid.Column="1" Margin="10" Width="Auto">
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" Width="Auto">
                 <Label>Path to Dmn file:</Label>
                 <DockPanel LastChildFill="True">
                     <Button Margin="2" Name="btnOpenFile" Click="btnOpenFile_Click"  >Select</Button>
@@ -51,6 +63,5 @@
                 </CheckBox>
             </StackPanel>
         </Grid>
-
     </Grid>
 </UserControl>
