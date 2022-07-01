@@ -27,14 +27,7 @@ namespace WiredBrainCoffee.CustomersApp.View
 
         private void DmnFileView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists(Settings.Default.DmnFilePath))
-            {
-                _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
-                _viewModel.SelectedDmnFileName = Path.GetFileName(_viewModel.SelectedDmnFilePath);
-                var ruleNodes = _dmnService.GetRules(_viewModel.SelectedDmnFilePath);
-                foreach (var ruleNode in ruleNodes)
-                    _viewModel.Rules.Add(ruleNode);
-            }
+            LoadRules();
         }
 
         private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
@@ -71,6 +64,23 @@ namespace WiredBrainCoffee.CustomersApp.View
                 Settings.Default.DmnFilePath = dialog.FileName;
                 Settings.Default.Save();
                 _viewModel.SelectedDmnFilePath = dialog.FileName;
+                LoadRules();
+            }
+        }
+
+        private void LoadRules()
+        {
+            if (File.Exists(Settings.Default.DmnFilePath))
+            {
+                _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
+                _viewModel.SelectedDmnFileName = Path.GetFileName(_viewModel.SelectedDmnFilePath);
+
+                var ruleNodes = _dmnService.GetRules(_viewModel.SelectedDmnFilePath);
+
+                _viewModel.Rules.Clear();
+
+                foreach (var node in ruleNodes)
+                    _viewModel.Rules.Add(node);
             }
         }
     }
