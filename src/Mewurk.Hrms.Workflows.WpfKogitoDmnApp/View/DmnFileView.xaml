@@ -76,6 +76,11 @@
                             Text="{Binding Path=SelectedRule.InputEntryValue, Mode=TwoWay}" />
                 </DockPanel>
                 <DockPanel LastChildFill="True">
+                    <Label>DmnRuleEntryValue:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.DmnRuleInputEntryValue.Value, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
                     <Label>OutputEntryOne:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.OutputEntryOne, Mode=TwoWay}" />
@@ -89,6 +94,11 @@
                     <Label>OutputEntryTwo:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.OutputEntryTwo, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <Label>DmnRuleOutputEntryTwo:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.DmnRuleOutputEntryTwo.Value, Mode=TwoWay}" />
                 </DockPanel>
                 <DockPanel LastChildFill="True">
                     <Button x:Name="btnSave" Click="btnSave_Click" >Save</Button>

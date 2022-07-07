@@ -69,6 +69,13 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                         if (element.Name.LocalName == "inputEntry" && element.PreviousNode != null)
                         {
                             rule.InputEntryValue = element!.Value;
+                            // DmnRuleInputEntryValue
+                            rule.DmnRuleInputEntryValue = new DmnRuleElement
+                            {
+                                //Value = element!.Value.Trim('\"'),
+                                Value = element!.Value,
+                                Id = element.LastAttribute!.Value
+                            };
                             continue;
                         }
 
@@ -86,6 +93,11 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                         if (element.Name.LocalName == "outputEntry" && element.PreviousNode != null && ((XElement)element.PreviousNode).Name.LocalName == "outputEntry")
                         {
                             rule.OutputEntryTwo = element!.Value;
+                            rule.DmnRuleOutputEntryTwo = new DmnRuleElement
+                            {
+                                Value = element!.Value,
+                                Id = element.LastAttribute!.Value
+                            };
                             continue;
                         }
                     }
@@ -159,7 +171,9 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
             foreach (var rule in rules)
             {
                 dmnRuleElementList.Add(rule.DmnRuleOutputEntryOne);
+                dmnRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
                 dmnRuleElementList.Add(rule.DmnRuleEntryName);
+                dmnRuleElementList.Add(rule.DmnRuleInputEntryValue);
             }
 
             var allNodes = dmnElement.DescendantNodesAndSelf();
