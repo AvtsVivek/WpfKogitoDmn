@@ -26,6 +26,17 @@
                              controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
                              Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}" />
                 </DockPanel >
+                <DockPanel LastChildFill="False">
+                    <Button Margin="2" Name="btnShowInExplorer" Click="btnShowInExplorer_Click">
+                        Show in Explorer
+                    </Button>
+                    <Button Margin="2" Name="btnOpenInVsCode" Click="btnOpenInVsCode_Click">
+                        Open in VsCode
+                    </Button>
+                    <Button Margin="2" Name="btnOpenInNotePadPulsPlus" Click="btnOpenInNotePadPulsPlus_Click">
+                        Open in Notepad++
+                    </Button>
+                </DockPanel>
             </StackPanel>
             <!-- Customer list -->
             <Grid x:Name="customerListGrid" Background="#777" Grid.Row="1" >
@@ -45,7 +56,7 @@
                         <Image Source="/Images/move.png" Height="18"/>
                     </Button>
                 </StackPanel>
-                <ListView Grid.Row="1" Margin="10 0 10 10" 
+                <ListView Grid.Row="1" Margin="10 0 10 10" SelectedItem="{Binding Path=SelectedRule}"
                           ItemsSource="{Binding Path=Rules}" DisplayMemberPath="InputEntryName" >
                 </ListView>
             </Grid>
@@ -57,10 +68,14 @@
                     <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
                         controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
                         Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}" />
+                    
                 </DockPanel >
                 <CheckBox Margin="0 10 0 0">
                     Is developer
                 </CheckBox>
+                <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                        controls:TextBoxHelper.Watermark="Path to xml"
+                        Text="{Binding Path=SelectedRule.InputEntryName, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
     </Grid>

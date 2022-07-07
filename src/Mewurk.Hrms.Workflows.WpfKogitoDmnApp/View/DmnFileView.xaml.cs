@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
+using CliWrap;
 
 namespace WiredBrainCoffee.CustomersApp.View
 {
@@ -82,6 +84,69 @@ namespace WiredBrainCoffee.CustomersApp.View
                 foreach (var node in ruleNodes)
                     _viewModel.Rules.Add(node);
             }
+        }
+
+        private void btnShowInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            if(!File.Exists(_viewModel.SelectedDmnFilePath))
+                return;
+
+            var directoryPath = new FileInfo(_viewModel.SelectedDmnFilePath).Directory!.FullName;
+
+            if (!Directory.Exists(directoryPath))
+                return;
+
+            Process.Start("explorer.exe", directoryPath);
+        }
+
+        private void btnOpenInVsCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(_viewModel.SelectedDmnFilePath))
+                return;
+
+            var csCodeExePath = @"C:\Program Files\Microsoft VS Code\Code.exe";
+
+            if (!File.Exists(csCodeExePath))
+            {
+                MessageBox.Show($"Vs Code does not exist at the location {csCodeExePath}" + Environment.NewLine + "Possible that vs code is not installed on this machine.", "Cannot open your file in VsCode", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            var process = new Process();
+            var procInfo = new ProcessStartInfo()
+            {
+                FileName = csCodeExePath,
+                Arguments = _viewModel.SelectedDmnFilePath,
+            };
+            process.StartInfo = procInfo;
+            process.Start();
+            if (process != null)
+                process.Dispose();
+        }
+
+        private void btnOpenInNotePadPulsPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(_viewModel.SelectedDmnFilePath))
+                return;
+
+            var notepadPlusPlusExePath = @"C:\Program Files\Notepad++\notepad++.exe";
+
+
+            if (!File.Exists(notepadPlusPlusExePath))
+            {
+                MessageBox.Show($"Notepad++ does not exist at the location {notepadPlusPlusExePath}" + Environment.NewLine + "Possible that notepad ++ is not installed on this machine.", "Cannot open your file in Notepad++", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var process = new Process();
+            var procInfo = new ProcessStartInfo()
+            {
+                FileName = notepadPlusPlusExePath,
+                Arguments = _viewModel.SelectedDmnFilePath,
+            };
+            process.StartInfo = procInfo;
+            process.Start();
+            if (process != null)
+                process.Dispose();
         }
     }
 }
