@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
 
@@ -12,7 +9,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 {
     public interface IDmnService
     {
-        //public IEnumerable<XNode> GetRules(string filePath);
         public List<DmnRule> GetRules(string filePath);
         void SaveRules(List<DmnRule> rules, string filePath);
     }
@@ -55,8 +51,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                         if (element.Name.LocalName == "inputEntry" && element.PreviousNode == null)
                         {
-                            //rule.InputEntryName = element!.Value.Trim('\"');
-                            rule.InputEntryName = element!.Value;
                             rule.DmnRuleEntryName = new DmnRuleElement
                             {
                                 //Value = element!.Value.Trim('\"'),
@@ -68,8 +62,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                         if (element.Name.LocalName == "inputEntry" && element.PreviousNode != null)
                         {
-                            rule.InputEntryValue = element!.Value;
-                            // DmnRuleInputEntryValue
                             rule.DmnRuleInputEntryValue = new DmnRuleElement
                             {
                                 //Value = element!.Value.Trim('\"'),
@@ -81,7 +73,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                         if (element.Name.LocalName == "outputEntry" && element.PreviousNode != null && ((XElement)element.PreviousNode).Name.LocalName == "inputEntry")
                         {
-                            rule.OutputEntryOne = element!.Value;
+                            //rule.OutputEntryOne = element!.Value;
                             rule.DmnRuleOutputEntryOne = new DmnRuleElement
                             {
                                 Value = element!.Value,
@@ -92,7 +84,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                         if (element.Name.LocalName == "outputEntry" && element.PreviousNode != null && ((XElement)element.PreviousNode).Name.LocalName == "outputEntry")
                         {
-                            rule.OutputEntryTwo = element!.Value;
+                            //rule.OutputEntryTwo = element!.Value;
                             rule.DmnRuleOutputEntryTwo = new DmnRuleElement
                             {
                                 Value = element!.Value,

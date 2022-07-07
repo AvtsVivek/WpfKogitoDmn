@@ -56,45 +56,45 @@
                     </Button>
                 </StackPanel>
                 <ListView Grid.Row="1" Margin="10 0 10 10" SelectedItem="{Binding Path=SelectedRule}"
-                          ItemsSource="{Binding Path=Rules}" DisplayMemberPath="InputEntryName" >
+                          ItemsSource="{Binding Path=Rules}" DisplayMemberPath="DmnRuleEntryName.Value" >
                 </ListView>
             </Grid>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" Width="Auto">
-                <DockPanel LastChildFill="True">
+                <!--<DockPanel LastChildFill="True">
                     <Label>InputEntryName:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.InputEntryName, Mode=TwoWay}" />
-                </DockPanel>
+                </DockPanel>-->
                 <DockPanel LastChildFill="True">
                     <Label>DmnRuleEntryName:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.DmnRuleEntryName.Value, Mode=TwoWay}" />
                 </DockPanel>
-                <DockPanel LastChildFill="True">
+                <!--<DockPanel LastChildFill="True">
                     <Label>InputEntryValue:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.InputEntryValue, Mode=TwoWay}" />
-                </DockPanel>
+                </DockPanel>-->
                 <DockPanel LastChildFill="True">
                     <Label>DmnRuleEntryValue:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.DmnRuleInputEntryValue.Value, Mode=TwoWay}" />
                 </DockPanel>
-                <DockPanel LastChildFill="True">
+                <!--<DockPanel LastChildFill="True">
                     <Label>OutputEntryOne:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.OutputEntryOne, Mode=TwoWay}" />
-                </DockPanel>
+                </DockPanel>-->
                 <DockPanel LastChildFill="True">
                     <Label>DmnRuleOutputEntryOne:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.DmnRuleOutputEntryOne.Value, Mode=TwoWay}" />
                 </DockPanel>
-                <DockPanel LastChildFill="True">
+                <!--<DockPanel LastChildFill="True">
                     <Label>OutputEntryTwo:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
                             Text="{Binding Path=SelectedRule.OutputEntryTwo, Mode=TwoWay}" />
-                </DockPanel>
+                </DockPanel>-->
                 <DockPanel LastChildFill="True">
                     <Label>DmnRuleOutputEntryTwo:</Label>
                     <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
