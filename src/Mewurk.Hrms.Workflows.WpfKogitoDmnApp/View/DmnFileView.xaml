@@ -62,8 +62,7 @@
             </Grid>
             <!-- Customer detail -->
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" Width="Auto">
-                <Label>Path to Dmn file:</Label>
-                <DockPanel LastChildFill="True">
+                <!--<DockPanel LastChildFill="True">
                     <Button Margin="2" Name="btnOpenFile" Click="btnOpenFile_Click"  >Select</Button>
                     <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
                         controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
@@ -72,10 +71,30 @@
                 </DockPanel >
                 <CheckBox Margin="0 10 0 0">
                     Is developer
-                </CheckBox>
-                <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
-                        controls:TextBoxHelper.Watermark="Path to xml"
-                        Text="{Binding Path=SelectedRule.InputEntryName, Mode=TwoWay}" />
+                </CheckBox>-->
+                <DockPanel LastChildFill="True">
+                    <Label>InputEntryName:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.InputEntryName, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <Label>InputEntryValue:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.InputEntryValue, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <Label>OutputEntryOne:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.OutputEntryOne, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <Label>OutputEntryTwo:</Label>
+                    <TextBox Margin="2" VerticalAlignment="Center" Width="Auto"
+                            Text="{Binding Path=SelectedRule.OutputEntryTwo, Mode=TwoWay}" />
+                </DockPanel>
+                <DockPanel LastChildFill="True">
+                    <Button x:Name="btnSave" Click="btnSave_Click" >Save</Button>
+                </DockPanel>
             </StackPanel>
         </Grid>
     </Grid>
