@@ -153,7 +153,7 @@ namespace WiredBrainCoffee.CustomersApp.View
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            var r = _viewModel.Rules;
         }
     }
 }

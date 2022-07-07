@@ -15,8 +15,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
         private string _selectedDmnFilePath = string.Empty;
         public ObservableCollection<DmnRule> Rules { get; } = new();
 
-        //public string SelectedRule { get; set; } = "HAre"; // default!;
-
         private DmnRule _selectedRule = default!;
 
         public DmnRule SelectedRule
@@ -27,12 +25,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
                 _selectedRule = value;
                 RaisePropertyChanged();
             }
-        }
-
-
-        public DmnFileViewModel()
-        {
-
         }
 
         public string SelectedDmnFileName {
