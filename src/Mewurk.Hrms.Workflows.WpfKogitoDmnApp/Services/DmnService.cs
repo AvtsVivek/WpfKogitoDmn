@@ -51,45 +51,71 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                         if (element.Name.LocalName == "inputEntry" && element.PreviousNode == null)
                         {
-                            rule.DmnRuleEntryName = new DmnRuleElement
+                            var dmnRuleElement = new DmnRuleElement
                             {
                                 //Value = element!.Value.Trim('\"'),
                                 Value = element!.Value,
-                                Id = element.LastAttribute!.Value
+                                Id = element.LastAttribute!.Value,
+                                Name = element.Name.LocalName,
                             };
+                            rule.DmnRuleEntryName = dmnRuleElement;
+                            rule.DmnRuleElements.Add(dmnRuleElement);
                             continue;
                         }
 
                         if (element.Name.LocalName == "inputEntry" && element.PreviousNode != null)
                         {
-                            rule.DmnRuleInputEntryValue = new DmnRuleElement
+                            var dmnRuleElement = new DmnRuleElement
                             {
                                 //Value = element!.Value.Trim('\"'),
                                 Value = element!.Value,
-                                Id = element.LastAttribute!.Value
+                                Id = element.LastAttribute!.Value,
+                                Name = element.Name.LocalName,
                             };
+                            rule.DmnRuleInputEntryValue = dmnRuleElement;
+                            rule.DmnRuleElements.Add(dmnRuleElement);
                             continue;
                         }
 
                         if (element.Name.LocalName == "outputEntry" && element.PreviousNode != null && ((XElement)element.PreviousNode).Name.LocalName == "inputEntry")
                         {
                             //rule.OutputEntryOne = element!.Value;
-                            rule.DmnRuleOutputEntryOne = new DmnRuleElement
+                            //rule.DmnRuleOutputEntryOne = new DmnRuleElement
+                            //{
+                            //    Value = element!.Value,
+                            //    Id = element.LastAttribute!.Value
+                            //};
+
+                            var dmnRuleElement = new DmnRuleElement
                             {
                                 Value = element!.Value,
-                                Id = element.LastAttribute!.Value
+                                Id = element.LastAttribute!.Value,
+                                Name = element.Name.LocalName,
                             };
+
+                            rule.DmnRuleOutputEntryOne = dmnRuleElement;
+                            rule.DmnRuleElements.Add(dmnRuleElement);
                             continue;
                         }
 
                         if (element.Name.LocalName == "outputEntry" && element.PreviousNode != null && ((XElement)element.PreviousNode).Name.LocalName == "outputEntry")
                         {
                             //rule.OutputEntryTwo = element!.Value;
-                            rule.DmnRuleOutputEntryTwo = new DmnRuleElement
+                            //rule.DmnRuleOutputEntryTwo = new DmnRuleElement
+                            //{
+                            //    Value = element!.Value,
+                            //    Id = element.LastAttribute!.Value
+                            //};
+
+                            var dmnRuleElement = new DmnRuleElement
                             {
                                 Value = element!.Value,
-                                Id = element.LastAttribute!.Value
+                                Id = element.LastAttribute!.Value,
+                                Name = element.Name.LocalName,
                             };
+
+                            rule.DmnRuleOutputEntryTwo = dmnRuleElement;
+                            rule.DmnRuleElements.Add(dmnRuleElement);
                             continue;
                         }
                     }
@@ -100,8 +126,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
             return rules; //ruleNodes;
         }
-
-
 
         private IEnumerable<XNode> GetRuleNodes(IEnumerable<XNode> nodes)
         {
@@ -149,73 +173,70 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                 throw new Exception("File does not exist!!");
             }
 
-            var dmnRootElement = XElement.Load(filePath);
+            //var dmnRootElement = XElement.Load(filePath);
+
+            var dmnRootElement = XDocument.Load(filePath);
+            XNamespace dmnNamespace = "http://www.omg.org/spec/DMN/20180521/MODEL/";
 
             UpdateExistingRules(dmnRootElement, rules);
+            AddNewRules(dmnRootElement, rules, dmnNamespace);
             dmnRootElement.Save(filePath);
-
-            AddNewRules(dmnRootElement, rules);
-            dmnRootElement.Save(filePath);
+            
         }
 
-        private void AddNewRules(XElement dmnElement, List<DmnRule> rules) {
-            var dmnRuleElementList = new List<DmnRuleElement>();
+        private void AddNewRules(XDocument dmnRootElement, List<DmnRule> dmnRules, XNamespace dmnNamespace) {
+
+            var decisionTableElement = dmnRootElement.Descendants(dmnNamespace + "decisionTable").FirstOrDefault()!;
 
             // Look for the once that are changed or modified.
-            foreach (var rule in rules)
+            foreach (var dmnRule in dmnRules)
             {
                 // Skip those ones that are existing. Pick only newly added ones.
-                if (rule.DmnRuleStatus == DmnRuleStatus.Existing)
+                if (dmnRule.DmnRuleStatus == DmnRuleStatus.Existing)
                     continue;
 
-                dmnRuleElementList.Add(rule.DmnRuleOutputEntryOne);
-                dmnRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
-                dmnRuleElementList.Add(rule.DmnRuleEntryName);
-                dmnRuleElementList.Add(rule.DmnRuleInputEntryValue);
-            }
+                var newRuleElements = new List<XElement>();
+                
 
-            var allNodes = dmnElement.DescendantNodesAndSelf();
-
-            var allElements = new List<XElement>();
-
-            foreach (var node in allNodes)
-            {
-                var element = node as XElement;
-
-                if (element != null)
-                    allElements.Add(element);
-            }
-
-            foreach (var dmnRuleElement in dmnRuleElementList)
-            {
-                foreach (var element in allElements)
+                foreach (var dmnRuleElement in dmnRule.DmnRuleElements)
                 {
-                    //if (element.LastAttribute == null)
-                    //    continue;
+                    var newRuleElement = new XElement(dmnNamespace + dmnRuleElement.Name,
+                        new XAttribute("id", "_" + Guid.NewGuid().ToString().ToUpper()),
+                            new XElement(dmnNamespace + "text",
+                            dmnRuleElement.Value
+                        ));
 
-                    //if (string.IsNullOrWhiteSpace(element.LastAttribute.Value))
-                    //    continue;
-
-                    //if (dmnRuleElement.Id != element.LastAttribute.Value)
-                    //    continue;
-
-                    //if (dmnRuleElement.Value == element.Value)
-                    //    continue;
-
-                    //var textElement = GetTextElement(element);
-
-                    //if (textElement == null)
-                    //    continue;
-
-                    // updatedElementCount++; // Just a count to know how many...
-
-                    // textElement.SetValue(dmnRuleElement.Value);
+                    newRuleElements.Add(newRuleElement);
                 }
+
+                var annotationEntryElement = new XElement(dmnNamespace + "annotationEntry",
+                    new XElement(dmnNamespace + "text"));
+
+                newRuleElements.Add(annotationEntryElement);
+
+                var newRule = new XElement(dmnNamespace + "rule",
+                    new XAttribute("id", "_" + Guid.NewGuid().ToString().ToUpper()),
+                    newRuleElements);
+
+                decisionTableElement.Add(newRule);
+
+
             }
 
+            
+
+            // Look for the once that are changed or modified.
+            //foreach (var dmnRule in dmnRules)
+            //{
+            //    // Skip those ones that are existing. Pick only newly added ones.
+            //    if (dmnRule.DmnRuleStatus == DmnRuleStatus.Existing)
+            //    {
+
+            //    }
+            //}
         }
 
-        private void UpdateExistingRules(XElement dmnElement, List<DmnRule> rules)
+        private void UpdateExistingRules(XDocument dmnRootElement, List<DmnRule> rules)
         {
             var updatedElementCount = 0;
             var dmnUpdateExistingRuleElementList = new List<DmnRuleElement>();
@@ -246,7 +267,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                 }
             }
 
-            var allNodes = dmnElement.DescendantNodesAndSelf();
+            var allNodes = dmnRootElement.DescendantNodes();
 
             var allElements = new List<XElement>();
 
@@ -283,14 +304,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
                     textElement.SetValue(dmnRuleElement.Value);
                 }
-            }
-
-            foreach (var dmnRuleElement in dmnNewRuleElementList)
-            {
-                //foreach (var element in allElements)
-                //{
-
-                //}
             }
         }
 

@@ -18,21 +18,22 @@ namespace WiredBrainCoffee.CustomersApp.View
     public partial class DmnFileView : UserControl
     {
         private readonly DmnFileViewModel _viewModel;
-        private readonly IDmnService _dmnService;
+        //private readonly IDmnService _dmnService;
 
         public DmnFileView()
         {
             InitializeComponent();
             _viewModel = new DmnFileViewModel();
             DataContext = _viewModel;
-            _dmnService = new DmnService();
-            Loaded += DmnFileView_Loaded;
+            //_dmnService = new DmnService();
+            Loaded += _viewModel.DmnFileView_Loaded;
+
         }
 
-        private void DmnFileView_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadRules();
-        }
+        //private void DmnFileView_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    LoadRules();
+        //}
 
         private void ButtonMoveNavigation_Click(object sender, RoutedEventArgs e)
         {
@@ -49,46 +50,47 @@ namespace WiredBrainCoffee.CustomersApp.View
 
         private void btnOpenFile_Click(object sender, RoutedEventArgs e)
         {
-            // Configure open file dialog box
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.InitialDirectory = @"c:\temp\";
-            dialog.FileName = "Document"; // Default file name
-            dialog.DefaultExt = ".dmn"; // Default file extension
-            dialog.Filter = "Dmn files (*.dmn)|*.dmn|Xml files (*.dml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
-            if (File.Exists(Settings.Default.DmnFilePath))
-                dialog.InitialDirectory = Path.GetDirectoryName(Settings.Default.DmnFilePath);
-            else
-                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //// Configure open file dialog box
+            //var dialog = new Microsoft.Win32.OpenFileDialog();
+            //dialog.InitialDirectory = @"c:\temp\";
+            //dialog.FileName = "Document"; // Default file name
+            //dialog.DefaultExt = ".dmn"; // Default file extension
+            //dialog.Filter = "Dmn files (*.dmn)|*.dmn|Xml files (*.dml)|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
-            var result = dialog.ShowDialog();
+            //if (File.Exists(Settings.Default.DmnFilePath))
+            //    dialog.InitialDirectory = Path.GetDirectoryName(Settings.Default.DmnFilePath);
+            //else
+            //    dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            if (result == true)
-            {
-                Settings.Default.DmnFilePath = dialog.FileName;
-                Settings.Default.Save();
-                _viewModel.SelectedDmnFilePath = dialog.FileName;
-                LoadRules();
-            }
+            //var result = dialog.ShowDialog();
+
+            //if (result == true)
+            //{
+            //    Settings.Default.DmnFilePath = dialog.FileName;
+            //    Settings.Default.Save();
+            //    _viewModel.SelectedDmnFilePath = dialog.FileName;
+            //    LoadRules();
+            //}
         }
 
-        private void LoadRules()
-        {
-            if (File.Exists(Settings.Default.DmnFilePath))
-            {
-                _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
-                _viewModel.SelectedDmnFileName = Path.GetFileName(_viewModel.SelectedDmnFilePath);
+        //private void LoadRules()
+        //{
+        //    if (File.Exists(Settings.Default.DmnFilePath))
+        //    {
+        //        _viewModel.SelectedDmnFilePath = Settings.Default.DmnFilePath;
+        //        _viewModel.SelectedDmnFileName = Path.GetFileName(_viewModel.SelectedDmnFilePath);
 
-                var ruleNodes = _dmnService.GetRules(_viewModel.SelectedDmnFilePath);
+        //        var ruleNodes = _dmnService.GetRules(_viewModel.SelectedDmnFilePath);
 
-                _viewModel.Rules.Clear();
+        //        _viewModel.Rules.Clear();
 
-                foreach (var node in ruleNodes)
-                    _viewModel.Rules.Add(new DmnRuleViewModel(node));
+        //        foreach (var node in ruleNodes)
+        //            _viewModel.Rules.Add(new DmnRuleViewModel(node));
 
-                _viewModel.SelectedRule = new DmnRuleViewModel(ruleNodes.ToList().FirstOrDefault()!);
-            }
-        }
+        //        _viewModel.SelectedRule = new DmnRuleViewModel(ruleNodes.ToList().FirstOrDefault()!);
+        //    }
+        //}
 
         private void btnShowInExplorer_Click(object sender, RoutedEventArgs e)
         {

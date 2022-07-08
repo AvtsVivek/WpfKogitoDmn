@@ -1,4 +1,5 @@
-﻿using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
+﻿using System.Collections.Generic;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
 
 namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 {
@@ -13,6 +14,14 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
         public string Id => _dmnRule.Id;
 
         public string Name => _dmnRule.Name;
+
+        public List<DmnRuleElement> DmnRuleElements {
+            get => _dmnRule.DmnRuleElements;
+            set {
+                _dmnRule.DmnRuleElements = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public DmnRuleElement DmnRuleEntryName
         {

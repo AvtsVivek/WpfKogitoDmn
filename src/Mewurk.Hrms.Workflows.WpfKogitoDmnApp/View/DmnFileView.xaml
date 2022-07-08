@@ -21,7 +21,7 @@
             <StackPanel Grid.Row="0" Margin="10" Width="Auto" Grid.ColumnSpan="3">
                 <Label>Path to Dmn file:</Label>
                 <DockPanel LastChildFill="True">
-                    <Button Margin="2" Name="btnOpenOneFile" Click="btnOpenFile_Click">Select</Button>
+                    <Button Margin="2" Name="btnOpenOneFile" Click="btnOpenFile_Click" Command="{Binding OpenFileCommand}" >Select</Button>
                     <TextBox Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center" Width="Auto"
                              controls:TextBoxHelper.Watermark="Path to xml" controls:TextBoxHelper.ClearTextButton="True"
                              Text="{Binding Path=SelectedDmnFilePath, Mode=TwoWay}" />
@@ -55,6 +55,7 @@
                         <Image Source="/Images/move.png" Height="18"/>
                     </Button>
                 </StackPanel>
+                
                 <ListView Grid.Row="1" Margin="10 0 10 10" SelectedItem="{Binding Path=SelectedRule}"
                           ItemsSource="{Binding Path=Rules}" DisplayMemberPath="DmnRuleEntryName.Value" >
                 </ListView>
@@ -102,7 +103,7 @@
                 </DockPanel>
                 <DockPanel LastChildFill="True">
                     <Button x:Name="btnSave"
-                            Command="{Binding SaveDmnXmlFileCommand}" >Save</Button>
+                            Command="{Binding SaveDmnXmlFileCommand}">Save</Button>
                 </DockPanel>
             </StackPanel>
         </Grid>
