@@ -32,7 +32,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 
             foreach (var ruleViewModel in ruleViewModelList)
             {
-                var rule = new DmnRule()
+                var rule = new DmnRule(ruleViewModel.DmnRuleStatus)
                 {
                     Id = ruleViewModel.Id,
                     Name = ruleViewModel.Name,
@@ -50,8 +50,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 
         private void AddNewDmnRule(object? parameter)
         {
-            var newRule = new DmnRule {
-                DmnRuleStatus = DmnRuleStatus.New,
+            var newRule = new DmnRule(DmnRuleStatus.New) {
                 DmnRuleEntryName = new DmnRuleElement {
                     Id = new Guid().ToString(),
                     Value = "\"The new Rule...\""

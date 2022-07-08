@@ -37,7 +37,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                 var ruleElement = ruleNode as XElement;
                 if (ruleElement != null)
                 {
-                    var rule = new DmnRule();
+                    var rule = new DmnRule(DmnRuleStatus.Existing);
                     var nodesInsideRules = GetNodesInsideRules(ruleElement.DescendantNodesAndSelf());
                     foreach (var node in nodesInsideRules)
                     {
@@ -176,24 +176,74 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
             var allNodes = dmnElement.DescendantNodesAndSelf();
 
+            var allElements = new List<XElement>();
+
+            foreach (var node in allNodes)
+            {
+                var element = node as XElement;
+
+                if (element != null)
+                    allElements.Add(element);
+            }
+
+            foreach (var dmnRuleElement in dmnRuleElementList)
+            {
+                foreach (var element in allElements)
+                {
+                    //if (element.LastAttribute == null)
+                    //    continue;
+
+                    //if (string.IsNullOrWhiteSpace(element.LastAttribute.Value))
+                    //    continue;
+
+                    //if (dmnRuleElement.Id != element.LastAttribute.Value)
+                    //    continue;
+
+                    //if (dmnRuleElement.Value == element.Value)
+                    //    continue;
+
+                    //var textElement = GetTextElement(element);
+
+                    //if (textElement == null)
+                    //    continue;
+
+                    // updatedElementCount++; // Just a count to know how many...
+
+                    // textElement.SetValue(dmnRuleElement.Value);
+                }
+            }
 
         }
 
         private void UpdateExistingRules(XElement dmnElement, List<DmnRule> rules)
         {
-            var dmnRuleElementList = new List<DmnRuleElement>();
-            
+            var updatedElementCount = 0;
+            var dmnUpdateExistingRuleElementList = new List<DmnRuleElement>();
+            var dmnNewRuleElementList = new List<DmnRuleElement>();
+
             // Look for the once that are changed or modified.
             foreach (var rule in rules)
             {
                 // Skip those ones that are newly added.
-                if (rule.DmnRuleStatus == DmnRuleStatus.New)
-                    continue;
+                if (rule.DmnRuleStatus == DmnRuleStatus.Existing)
+                {
+                    dmnUpdateExistingRuleElementList.Add(rule.DmnRuleOutputEntryOne);
+                    dmnUpdateExistingRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
+                    dmnUpdateExistingRuleElementList.Add(rule.DmnRuleEntryName);
+                    dmnUpdateExistingRuleElementList.Add(rule.DmnRuleInputEntryValue);
+                }
+            }
 
-                dmnRuleElementList.Add(rule.DmnRuleOutputEntryOne);
-                dmnRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
-                dmnRuleElementList.Add(rule.DmnRuleEntryName);
-                dmnRuleElementList.Add(rule.DmnRuleInputEntryValue);
+            foreach (var rule in rules)
+            {
+                // Skip those ones that are newly added.
+                if (rule.DmnRuleStatus == DmnRuleStatus.New)
+                {
+                    dmnNewRuleElementList.Add(rule.DmnRuleOutputEntryOne);
+                    dmnNewRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
+                    dmnNewRuleElementList.Add(rule.DmnRuleEntryName);
+                    dmnNewRuleElementList.Add(rule.DmnRuleInputEntryValue);
+                }
             }
 
             var allNodes = dmnElement.DescendantNodesAndSelf();
@@ -208,7 +258,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                     allElements.Add(element);
             }
 
-            foreach (var dmnRuleElement in dmnRuleElementList)
+            foreach (var dmnRuleElement in dmnUpdateExistingRuleElementList)
             {
                 foreach (var element in allElements)
                 {
@@ -229,8 +279,18 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                     if (textElement == null)
                         continue;
 
+                    updatedElementCount++; // Just a count to know how many...
+
                     textElement.SetValue(dmnRuleElement.Value);
                 }
+            }
+
+            foreach (var dmnRuleElement in dmnNewRuleElementList)
+            {
+                //foreach (var element in allElements)
+                //{
+
+                //}
             }
         }
 
