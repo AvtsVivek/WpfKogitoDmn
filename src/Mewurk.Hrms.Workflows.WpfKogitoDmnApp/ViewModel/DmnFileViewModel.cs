@@ -73,7 +73,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
                 foreach (var node in ruleNodes)
                     Rules.Add(new DmnRuleViewModel(node));
 
-                //SelectedRule = new DmnRuleViewModel(ruleNodes.ToList().FirstOrDefault()!);
                 SelectedRule = Rules.FirstOrDefault()!;
             }
         }
