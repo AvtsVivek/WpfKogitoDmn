@@ -11,10 +11,17 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
     {
         public List<DmnRule> GetRules(string filePath);
         void SaveRules(List<DmnRule> rules, string filePath);
+
+        void DeleteRule(DmnRule rule, string filePath);
     }
     public class DmnService : IDmnService
     {
         public DmnService()
+        {
+
+        }
+
+        public void DeleteRule(DmnRule rule, string filePath)
         {
 
         }
@@ -240,7 +247,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
         {
             var updatedElementCount = 0;
             var dmnUpdateExistingRuleElementList = new List<DmnRuleElement>();
-            var dmnNewRuleElementList = new List<DmnRuleElement>();
 
             // Look for the once that are changed or modified.
             foreach (var rule in rules)
@@ -252,18 +258,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                     dmnUpdateExistingRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
                     dmnUpdateExistingRuleElementList.Add(rule.DmnRuleEntryName);
                     dmnUpdateExistingRuleElementList.Add(rule.DmnRuleInputEntryValue);
-                }
-            }
-
-            foreach (var rule in rules)
-            {
-                // Skip those ones that are newly added.
-                if (rule.DmnRuleStatus == DmnRuleStatus.New)
-                {
-                    dmnNewRuleElementList.Add(rule.DmnRuleOutputEntryOne);
-                    dmnNewRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
-                    dmnNewRuleElementList.Add(rule.DmnRuleEntryName);
-                    dmnNewRuleElementList.Add(rule.DmnRuleInputEntryValue);
                 }
             }
 
