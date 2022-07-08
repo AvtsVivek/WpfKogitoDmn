@@ -151,17 +151,45 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
             var dmnRootElement = XElement.Load(filePath);
 
-            SaveRules(dmnRootElement, rules);
+            UpdateExistingRules(dmnRootElement, rules);
+            dmnRootElement.Save(filePath);
 
+            AddNewRules(dmnRootElement, rules);
             dmnRootElement.Save(filePath);
         }
 
-        private void SaveRules(XElement dmnElement, List<DmnRule> rules)
-        {
+        private void AddNewRules(XElement dmnElement, List<DmnRule> rules) {
             var dmnRuleElementList = new List<DmnRuleElement>();
 
+            // Look for the once that are changed or modified.
             foreach (var rule in rules)
             {
+                // Skip those ones that are existing. Pick only newly added ones.
+                if (rule.DmnRuleStatus == DmnRuleStatus.Existing)
+                    continue;
+
+                dmnRuleElementList.Add(rule.DmnRuleOutputEntryOne);
+                dmnRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
+                dmnRuleElementList.Add(rule.DmnRuleEntryName);
+                dmnRuleElementList.Add(rule.DmnRuleInputEntryValue);
+            }
+
+            var allNodes = dmnElement.DescendantNodesAndSelf();
+
+
+        }
+
+        private void UpdateExistingRules(XElement dmnElement, List<DmnRule> rules)
+        {
+            var dmnRuleElementList = new List<DmnRuleElement>();
+            
+            // Look for the once that are changed or modified.
+            foreach (var rule in rules)
+            {
+                // Skip those ones that are newly added.
+                if (rule.DmnRuleStatus == DmnRuleStatus.New)
+                    continue;
+
                 dmnRuleElementList.Add(rule.DmnRuleOutputEntryOne);
                 dmnRuleElementList.Add(rule.DmnRuleOutputEntryTwo);
                 dmnRuleElementList.Add(rule.DmnRuleEntryName);

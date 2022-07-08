@@ -51,14 +51,17 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
         private void AddNewDmnRule(object? parameter)
         {
             var newRule = new DmnRule {
+                DmnRuleStatus = DmnRuleStatus.New,
                 DmnRuleEntryName = new DmnRuleElement {
                     Id = new Guid().ToString(),
                     Value = "\"The new Rule...\""
                 }
             };
+
             var newRuleViewModel = new DmnRuleViewModel(newRule);
             SelectedRule = newRuleViewModel;
             Rules.Add(newRuleViewModel);
+
         }
 
         public DelegateCommand SaveDmnXmlFileCommand { get; }

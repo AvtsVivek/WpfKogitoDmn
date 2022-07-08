@@ -14,10 +14,26 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model
         public DmnRuleElement DmnRuleInputEntryValue { get; set; } = default!;
         public DmnRuleElement DmnRuleOutputEntryOne { get; set; } = default!;
         public DmnRuleElement DmnRuleOutputEntryTwo { get; set; } = default!;
+
+        private DmnRuleStatus _dmnRuleStatus = DmnRuleStatus.Existing;
+
+        public DmnRuleStatus DmnRuleStatus
+        {
+            get { return _dmnRuleStatus; }
+            init { _dmnRuleStatus = DmnRuleStatus.Existing; }
+        }
+
     }
 
     public class DmnRuleElement {
         public string Id { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
-    }    
+    }
+
+    public enum DmnRuleStatus
+    {
+        Existing,
+        New,
+        MarkedForDeletion
+    }
 }

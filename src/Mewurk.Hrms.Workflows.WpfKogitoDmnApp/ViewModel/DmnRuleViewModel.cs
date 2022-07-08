@@ -23,6 +23,10 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
             }
         }
 
+        public DmnRuleStatus DmnRuleStatus {
+            get => _dmnRule.DmnRuleStatus;
+        }
+
         public DmnRuleElement DmnRuleInputEntryValue
         {
             get => _dmnRule.DmnRuleInputEntryValue;
