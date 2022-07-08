@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Command;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 
@@ -13,11 +14,59 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
     {
         private string _selectedDmnFileName = string.Empty;
         private string _selectedDmnFilePath = string.Empty;
-        public ObservableCollection<DmnRule> Rules { get; } = new();
+        public ObservableCollection<DmnRuleViewModel> Rules { get; } = new();
+        private readonly IDmnService _dmnService;
 
-        private DmnRule _selectedRule = default!;
+        public DmnFileViewModel()
+        {
+            AddNewDmnRuleCommand = new DelegateCommand(AddNewDmnRule);
+            SaveDmnXmlFileCommand = new DelegateCommand(SaveDmnXmlFile);
+            _dmnService = new DmnService();
+        }
 
-        public DmnRule SelectedRule
+        private void SaveDmnXmlFile(object? parameter)
+        {
+            var ruleViewModelList = Rules.ToList();
+
+            var ruleList = new List<DmnRule>();
+
+            foreach (var ruleViewModel in ruleViewModelList)
+            {
+                var rule = new DmnRule()
+                {
+                    Id = ruleViewModel.Id,
+                    Name = ruleViewModel.Name,
+                    DmnRuleEntryName = ruleViewModel.DmnRuleEntryName,
+                    DmnRuleInputEntryValue = ruleViewModel.DmnRuleInputEntryValue,
+                    DmnRuleOutputEntryOne = ruleViewModel.DmnRuleOutputEntryOne,
+                    DmnRuleOutputEntryTwo = ruleViewModel.DmnRuleOutputEntryTwo,
+                };
+                ruleList.Add(rule);
+            }
+
+            // var r = _viewModel.Rules;
+            _dmnService.SaveRules(ruleList, SelectedDmnFilePath);
+        }
+
+        private void AddNewDmnRule(object? parameter)
+        {
+            var newRule = new DmnRule {
+                DmnRuleEntryName = new DmnRuleElement {
+                    Id = new Guid().ToString(),
+                    Value = "\"The new Rule...\""
+                }
+            };
+            var newRuleViewModel = new DmnRuleViewModel(newRule);
+            SelectedRule = newRuleViewModel;
+            Rules.Add(newRuleViewModel);
+        }
+
+        public DelegateCommand SaveDmnXmlFileCommand { get; }
+        public DelegateCommand AddNewDmnRuleCommand { get; }
+
+        private DmnRuleViewModel _selectedRule = default!;
+
+        public DmnRuleViewModel SelectedRule
         {
             get => _selectedRule;
             set

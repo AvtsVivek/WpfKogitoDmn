@@ -8,14 +8,11 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model
 {
     public class DmnRule
     {
+        public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        //public string InputEntryName { get; set; } = string.Empty;
         public DmnRuleElement DmnRuleEntryName { get; set; } = default!;
-        //public string InputEntryValue { get; set; } = string.Empty;
         public DmnRuleElement DmnRuleInputEntryValue { get; set; } = default!;
-        //public string OutputEntryOne { get; set; } = string.Empty;
         public DmnRuleElement DmnRuleOutputEntryOne { get; set; } = default!;
-        //public string OutputEntryTwo { get; set; } = string.Empty;
         public DmnRuleElement DmnRuleOutputEntryTwo { get; set; } = default!;
     }
 

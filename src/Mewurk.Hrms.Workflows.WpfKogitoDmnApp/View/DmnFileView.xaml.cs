@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
@@ -82,9 +84,9 @@ namespace WiredBrainCoffee.CustomersApp.View
                 _viewModel.Rules.Clear();
 
                 foreach (var node in ruleNodes)
-                    _viewModel.Rules.Add(node);
+                    _viewModel.Rules.Add(new DmnRuleViewModel(node));
 
-                _viewModel.SelectedRule = ruleNodes.ToList().FirstOrDefault()!;
+                _viewModel.SelectedRule = new DmnRuleViewModel(ruleNodes.ToList().FirstOrDefault()!);
             }
         }
 
@@ -151,10 +153,6 @@ namespace WiredBrainCoffee.CustomersApp.View
                 process.Dispose();
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            // var r = _viewModel.Rules;
-            _dmnService.SaveRules(_viewModel.Rules.ToList(), _viewModel.SelectedDmnFilePath);
-        }
+
     }
 }
