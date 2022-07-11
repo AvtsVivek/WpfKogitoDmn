@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WiredBrainCoffee.CustomersApp
+namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

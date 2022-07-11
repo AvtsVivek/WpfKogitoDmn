@@ -10,7 +10,7 @@ using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
 
-namespace WiredBrainCoffee.CustomersApp.View
+namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.View
 {
     /// <summary>
     /// Interaction logic for CustomersView.xaml
