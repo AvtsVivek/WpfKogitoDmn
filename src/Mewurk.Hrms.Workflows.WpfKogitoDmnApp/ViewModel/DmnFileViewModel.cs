@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -13,6 +14,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 {
     public class DmnFileViewModel : ViewModelBase
     {
+        private bool _modelChanged = false;
         private string _selectedDmnFileName = string.Empty;
         private string _selectedDmnFilePath = string.Empty;
         public ObservableCollection<DmnRuleViewModel> Rules { get; } = new();
@@ -21,11 +23,26 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
         public DmnFileViewModel()
         {
             AddNewDmnRuleCommand = new DelegateCommand(AddNewDmnRule);
-            SaveDmnXmlFileCommand = new DelegateCommand(SaveDmnXmlFile);
+            SaveDmnXmlFileCommand = new DelegateCommand(SaveDmnXmlFile, CanSave);
             OpenFileCommand = new DelegateCommand(OpenFile);
             DeleteDmnRuleCommand = new DelegateCommand(DeleteDmnRule);
             _dmnService = new DmnService();
+            Rules.CollectionChanged += Rules_CollectionChanged;
         }
+
+        private void Rules_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            _modelChanged = true;
+        }
+
+        private bool CanSave(object? parameter)
+        {
+            // This is still work in progress.
+
+            // return _modelChanged;
+            return true;
+        }
+
 
         internal void DmnFileView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -74,6 +91,9 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 
                 SelectedRule = Rules.FirstOrDefault()!;
             }
+
+            _modelChanged = false;
+            SaveDmnXmlFileCommand.RaiseCanExecuteChanged();
         }
 
         private void SaveDmnXmlFile(object? parameter)
@@ -183,7 +203,8 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
             var newRuleViewModel = new DmnRuleViewModel(newRule);
             SelectedRule = newRuleViewModel;
             Rules.Add(newRuleViewModel);
-
+            _modelChanged = true;
+            SaveDmnXmlFileCommand.RaiseCanExecuteChanged();
         }
 
         public DelegateCommand OpenFileCommand { get; }
