@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Command;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
@@ -80,30 +78,36 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 
         private void SaveDmnXmlFile(object? parameter)
         {
+            //var ruleViewModelList = Rules.ToList();
+
+            //var ruleList = new List<DmnRule>();
+
+            //foreach (var ruleViewModel in ruleViewModelList)
+            //{
+            //    var rule = GetRuleFromViewModel(ruleViewModel);
+            //    ruleList.Add(rule);
+            //}
+
+            var ruleList = GetRulesFromRuleViewModelList();
+
+            _dmnService.SaveRules(ruleList, SelectedDmnFilePath);
+
+            LoadRules();
+        }
+
+        private List<DmnRule> GetRulesFromRuleViewModelList()
+        {
             var ruleViewModelList = Rules.ToList();
 
             var ruleList = new List<DmnRule>();
 
             foreach (var ruleViewModel in ruleViewModelList)
             {
-                //var rule = new DmnRule(ruleViewModel.DmnRuleStatus)
-                //{
-                //    Id = ruleViewModel.Id,
-                //    Name = ruleViewModel.Name,
-                //    DmnRuleEntryName = ruleViewModel.DmnRuleEntryName,
-                //    DmnRuleInputEntryValue = ruleViewModel.DmnRuleInputEntryValue,
-                //    DmnRuleOutputEntryOne = ruleViewModel.DmnRuleOutputEntryOne,
-                //    DmnRuleOutputEntryTwo = ruleViewModel.DmnRuleOutputEntryTwo,
-                //    DmnRuleElements = ruleViewModel.DmnRuleElements,
-                //};
-
                 var rule = GetRuleFromViewModel(ruleViewModel);
                 ruleList.Add(rule);
             }
 
-            // var r = _viewModel.Rules;
-            _dmnService.SaveRules(ruleList, SelectedDmnFilePath);
-            LoadRules();
+            return ruleList;
         }
 
         private DmnRule GetRuleFromViewModel(DmnRuleViewModel ruleViewModel)
@@ -128,9 +132,10 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
                 MessageBox.Show("No Rule selected. Please select a rule from the list view and then click Delete", "No Rule Selected", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
-            var rule = GetRuleFromViewModel(SelectedRule);
-            _dmnService.DeleteRule(rule, SelectedDmnFilePath);
+            var ruleList = GetRulesFromRuleViewModelList();
+            var ruleToBeDeleted = GetRuleFromViewModel(SelectedRule);
+            _dmnService.DeleteRule(ruleToBeDeleted, ruleList, SelectedDmnFilePath);
+            LoadRules();
         }
 
         private void AddNewDmnRule(object? parameter)

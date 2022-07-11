@@ -12,7 +12,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
         public List<DmnRule> GetRules(string filePath);
         void SaveRules(List<DmnRule> rules, string filePath);
 
-        void DeleteRule(DmnRule rule, string filePath);
+        void DeleteRule(DmnRule ruleToBeDeleted, List<DmnRule> ruleList, string filePath);
     }
     public class DmnService : IDmnService
     {
@@ -21,10 +21,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
 
         }
 
-        public void DeleteRule(DmnRule rule, string filePath)
-        {
 
-        }
 
         public List<DmnRule> GetRules(string filePath)
         {
@@ -45,6 +42,9 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                 if (ruleElement != null)
                 {
                     var rule = new DmnRule(DmnRuleStatus.Existing);
+
+                    SetIdOnRule(rule, ruleElement);
+
                     var nodesInsideRules = GetNodesInsideRules(ruleElement.DescendantNodesAndSelf());
                     foreach (var node in nodesInsideRules)
                     {
@@ -134,6 +134,16 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
             return rules; //ruleNodes;
         }
 
+        private void SetIdOnRule(DmnRule rule, XElement ruleElement)
+        {
+            if (ruleElement.FirstAttribute != null)
+                if (ruleElement.FirstAttribute.Name != null)
+                    if (!string.IsNullOrWhiteSpace(ruleElement.FirstAttribute.Name.LocalName))
+                        if (ruleElement.FirstAttribute.Name.LocalName == "id")
+                            if (!string.IsNullOrWhiteSpace(ruleElement.FirstAttribute.Value))
+                                rule.Id = ruleElement.FirstAttribute.Value;
+        }
+
         private IEnumerable<XNode> GetRuleNodes(IEnumerable<XNode> nodes)
         {
             var selectedNodes = new List<XNode>();
@@ -179,8 +189,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
             {
                 throw new Exception("File does not exist!!");
             }
-
-            //var dmnRootElement = XElement.Load(filePath);
 
             var dmnRootElement = XDocument.Load(filePath);
             XNamespace dmnNamespace = "http://www.omg.org/spec/DMN/20180521/MODEL/";
@@ -252,6 +260,7 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
             foreach (var rule in rules)
             {
                 // Skip those ones that are newly added.
+                // Consider only those that are existing and not new.
                 if (rule.DmnRuleStatus == DmnRuleStatus.Existing)
                 {
                     dmnUpdateExistingRuleElementList.Add(rule.DmnRuleOutputEntryOne);
@@ -299,6 +308,42 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services
                     textElement.SetValue(dmnRuleElement.Value);
                 }
             }
+        }
+
+        public void DeleteRule(DmnRule ruleToBeDeleted, List<DmnRule> ruleList, string filePath)
+        {
+            var dmnRootElement = XDocument.Load(filePath);
+
+            var allNodes = dmnRootElement.DescendantNodes();
+
+            var allElements = new List<XElement>();
+
+            foreach (var node in allNodes)
+            {
+                var element = node as XElement;
+
+                if (element != null)
+                    allElements.Add(element);
+            }
+
+            foreach (var element in allElements)
+            {
+                if (element.LastAttribute == null)
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(element.LastAttribute.Value))
+                    continue;
+
+                if ("id" != element.LastAttribute.Name.LocalName)
+                    continue;
+
+                if (ruleToBeDeleted.Id != element.LastAttribute.Value)
+                    continue;
+
+                element.Remove();
+            }
+
+            dmnRootElement.Save(filePath);
         }
 
         public XElement? GetTextElement(XElement element)
