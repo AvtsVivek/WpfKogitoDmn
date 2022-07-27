@@ -98,16 +98,6 @@ namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 
         private void SaveDmnXmlFile(object? parameter)
         {
-            //var ruleViewModelList = Rules.ToList();
-
-            //var ruleList = new List<DmnRule>();
-
-            //foreach (var ruleViewModel in ruleViewModelList)
-            //{
-            //    var rule = GetRuleFromViewModel(ruleViewModel);
-            //    ruleList.Add(rule);
-            //}
-
             var ruleList = GetRulesFromRuleViewModelList();
 
             _dmnService.SaveRules(ruleList, SelectedDmnFilePath);
