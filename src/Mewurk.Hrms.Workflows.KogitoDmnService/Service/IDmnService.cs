@@ -1,6 +1,6 @@
 ﻿using Mewurk.Hrms.Workflows.KogitoDmnService.Model;
 
-namespace Mewurk.Hrms.Workflows.KogitoDmnService
+namespace Mewurk.Hrms.Workflows.KogitoDmnService.Service
 {
     public interface IDmnService
     {

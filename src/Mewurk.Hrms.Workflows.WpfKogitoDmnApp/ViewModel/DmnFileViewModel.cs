@@ -5,8 +5,8 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using Mewurk.Hrms.Workflows.KogitoDmnService;
 using Mewurk.Hrms.Workflows.KogitoDmnService.Model;
+using Mewurk.Hrms.Workflows.KogitoDmnService.Service;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Command;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
 
