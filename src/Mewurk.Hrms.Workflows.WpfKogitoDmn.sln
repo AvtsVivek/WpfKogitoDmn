@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mewurk.Hrms.Workflows.WpfKogitoDmnApp", "Mewurk.Hrms.Workflows.WpfKogitoDmnApp\Mewurk.Hrms.Workflows.WpfKogitoDmnApp.csproj", "{A4F6566E-D0CD-4497-B1B4-F474283976B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mewurk.Hrms.Workflows.KogitoDmnService", "Mewurk.Hrms.Workflows.KogitoDmnService\Mewurk.Hrms.Workflows.KogitoDmnService.csproj", "{298FB3F8-5316-442C-A179-3D730E72067E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A4F6566E-D0CD-4497-B1B4-F474283976B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4F6566E-D0CD-4497-B1B4-F474283976B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4F6566E-D0CD-4497-B1B4-F474283976B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298FB3F8-5316-442C-A179-3D730E72067E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298FB3F8-5316-442C-A179-3D730E72067E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298FB3F8-5316-442C-A179-3D730E72067E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298FB3F8-5316-442C-A179-3D730E72067E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

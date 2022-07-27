@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
-using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Properties;
-using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Services;
 using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel;
 
 namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.View

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Mewurk.Hrms.Workflows.WpfKogitoDmnApp.Model;
+using Mewurk.Hrms.Workflows.KogitoDmnService.Model;
 
 namespace Mewurk.Hrms.Workflows.WpfKogitoDmnApp.ViewModel
 {
