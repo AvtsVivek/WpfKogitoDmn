@@ -6,7 +6,7 @@ namespace Mewurk.Hrms.Workflows.KogitoDmnService.Service
     {
         public List<DmnRule> GetRules(string filePath);
         void SaveRules(List<DmnRule> rules, string filePath);
-
-        void DeleteRule(DmnRule ruleToBeDeleted, List<DmnRule> ruleList, string filePath);
+        void DeleteRule(DmnRule ruleToBeDeleted, List<DmnRule> ruleList,
+            string filePath);
     }
 }
