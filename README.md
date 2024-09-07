@@ -11,3 +11,5 @@ Wpf Kogito Dmn Example
 
 4. https://github.com/AvtsVivek/DecoratorsForCcc/tree/main
 
+5. https://github.com/AvtsVivek/NoesisWpf
+
